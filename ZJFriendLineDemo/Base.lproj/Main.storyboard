@@ -1,25 +1,78 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="WtZ-G8-09i">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--Base Navifation Controller-->
+        <scene sceneID="bRO-NH-atM">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="WtZ-G8-09i" customClass="BaseNavifationController" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="iNe-71-oVf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="rnL-25-e9b" kind="relationship" relationship="rootViewController" id="edP-T0-Mhy"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bTC-As-1UP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-93" y="-111"/>
+        </scene>
+        <!--微信-->
+        <scene sceneID="1V3-Nn-tMp">
+            <objects>
+                <viewController id="rnL-25-e9b" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="h12-o2-5Ky"/>
+                        <viewControllerLayoutGuide type="bottom" id="Kgh-w0-0zb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="SGL-kZ-Ug3">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3MH-81-lNP">
+                                <rect key="frame" x="137.5" y="269" width="45" height="30"/>
+                                <state key="normal" title="点击我"/>
+                                <connections>
+                                    <segue destination="sBz-HB-Get" kind="push" id="mxk-RY-nPh"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="3MH-81-lNP" firstAttribute="centerX" secondItem="SGL-kZ-Ug3" secondAttribute="centerX" id="I6w-YE-tCw"/>
+                            <constraint firstItem="3MH-81-lNP" firstAttribute="centerY" secondItem="SGL-kZ-Ug3" secondAttribute="centerY" id="nsB-eU-vlW"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="微信" id="1Vf-ea-vlA"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hsX-RY-Wwn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="248" y="-89"/>
+        </scene>
+        <!--Friend Line Controller-->
+        <scene sceneID="eoP-5I-wKU">
+            <objects>
+                <tableViewController id="sBz-HB-Get" customClass="FriendLineController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="TuN-Nw-zA7">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.19607843137254902" green="0.19607843137254902" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
+                        <connections>
+                            <outlet property="dataSource" destination="sBz-HB-Get" id="rxu-Lv-F26"/>
+                            <outlet property="delegate" destination="sBz-HB-Get" id="kyc-SW-cbd"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="0XC-3N-INM"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n3b-iX-RjO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="716" y="-65"/>
         </scene>
     </scenes>
 </document>
