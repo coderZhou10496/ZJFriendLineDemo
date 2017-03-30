@@ -17,7 +17,7 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-       // self.backgroundColor = [UIColor redColor];
+        //self.backgroundColor = [UIColor redColor];
         _imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"AlbumReflashIcon"]];
         self.bounds = _imageView.bounds;
         self.center = CGPointMake(40, 40);
@@ -97,6 +97,8 @@
         [UIView animateWithDuration:0.3 animations:^{
             _imageView.transform = CGAffineTransformIdentity;
         }];
+        NSLog(@"%@ \n%@",NSStringFromClass(self.superview.class),NSStringFromClass(_imageView.superview.class));
+        [self.superview bringSubviewToFront:self];
     }
 }
 @end

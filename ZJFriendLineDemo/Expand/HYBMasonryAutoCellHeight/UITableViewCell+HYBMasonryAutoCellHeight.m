@@ -40,7 +40,8 @@ const void *s_hyb_bottomOffsetToCellKey = "hyb_bottomOffsetToCellKey";
 + (CGFloat)hyb_heightForTableView:(UITableView *)tableView
                            config:(HYBCellBlock)config
                             cache:(HYBCacheHeight)cache {
-  if (cache) {
+  if (cache)
+  {
     NSDictionary *cacheKeys = cache();
     NSString *key = cacheKeys[kHYBCacheUniqueKey];
     NSString *stateKey = cacheKeys[kHYBCacheStateKey];
@@ -52,10 +53,12 @@ const void *s_hyb_bottomOffsetToCellKey = "hyb_bottomOffsetToCellKey";
     if (tableView == nil
         || tableView.hyb_cacheCellHeightDict.count == 0
         || shouldUpdate.boolValue
-        || cacheHeight == nil) {
+        || cacheHeight == nil)
+    {
       CGFloat height = [self hyb_heightForTableView:tableView config:config];
       
-      if (stateDict == nil) {
+      if (stateDict == nil)
+      {
         stateDict = [[NSMutableDictionary alloc] init];
         tableView.hyb_cacheCellHeightDict[key] = stateDict;
       }
@@ -63,9 +66,11 @@ const void *s_hyb_bottomOffsetToCellKey = "hyb_bottomOffsetToCellKey";
       [stateDict setObject:[NSString stringWithFormat:@"%lf", height] forKey:stateKey];
       
       return height;
-    } else if (tableView.hyb_cacheCellHeightDict.count != 0
+    }
+    else if (tableView.hyb_cacheCellHeightDict.count != 0
                && cacheHeight != nil
-               && cacheHeight.integerValue != 0) {
+               && cacheHeight.integerValue != 0)
+    {
       return cacheHeight.floatValue;
     }
   }
