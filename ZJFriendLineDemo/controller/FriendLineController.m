@@ -31,18 +31,26 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    self.tableView.backgroundColor = [UIColor whiteColor];
-    self.automaticallyAdjustsScrollViewInsets = NO;
     self.title = @"朋友圈";
-    self.dataArray = [DataSourceManager loadDataArray].mutableCopy;
+    if (@available(iOS 11.0, *)) {
+        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    } else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    
     FriendHeaderView *headerView = [[FriendHeaderView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 240+64+20)];
     self.tableView.tableHeaderView = headerView;
     
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        self.dataArray = [DataSourceManager loadDataArray].mutableCopy;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+    });
+    
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeNotification:) name:UIKeyboardWillChangeFrameNotification object:nil];
-    
-    
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -100,7 +108,7 @@
 {
     FriendLineCellModel *model = self.dataArray[indexPath.row];
     model.isExpand = !model.isExpand;
-    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView reloadData];
 }
 #pragma mark -- 点击图片
 -(void)didClickImageViewWithCurrentView:(UIImageView *)imageView imageViewArray:(NSMutableArray *)array imageSuperView:(UIView *)view indexPath:(NSIndexPath *)indexPath
@@ -118,7 +126,7 @@
     
     model.likeNameArray = [likeArray copy];
     model.isLiked = !model.isLiked;
-    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView reloadData];
 }
 #pragma mark -- 点击评论按钮
 -(void)didClickCommentBtnWithIndexPath:(NSIndexPath *)indexPath
@@ -144,8 +152,7 @@
                 NSMutableArray *mutableArray = model.commentArray.mutableCopy;
                 [mutableArray removeObjectAtIndex:secIndexPath.row];
                 model.commentArray = mutableArray.copy;
-                [self.tableView reloadRowsAtIndexPaths:@[firIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-                
+                [self.tableView reloadData];
             }];
             [controller addAction:cancelAction];
             [controller addAction:okAction];
@@ -175,12 +182,12 @@
     }
     newComModel.content = text;
     
-    
     NSMutableArray *mutableArray = model.commentArray.mutableCopy;
     [mutableArray addObject:newComModel];
     model.commentArray = mutableArray.copy;
     
-    [self.tableView reloadRowsAtIndexPaths:@[self.commentIndexpath] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView reloadData];
+
     self.replyIndexpath = nil;
     [self.chatKeyBoard keyboardDownForComment];
     
